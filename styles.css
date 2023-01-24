@@ -1,0 +1,11 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: rgb(141, 158, 170);
+  padding: 10px 30px;
+  display: grid;
+  grid-template: 1fr / 1fr 200px;
+}
