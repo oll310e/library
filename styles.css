@@ -1,13 +1,30 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: content-box;
 }
 
-header {
-  background-color: rgb(141, 158, 170);
-  padding: 10px 36px;
+.container {
+  min-height: calc(100vh - 20px);
   display: grid;
-  grid-template: 1fr / 1fr 200px;
+  grid-template-rows: 100px 1fr 100px;
+}
+
+header,
+footer {
+  height: 100%;
+  background-color: rgb(141, 158, 170);
+  padding: 10px 28px;
+  display: grid;
+  grid-template: 80px / 1fr 200px;
+  align-items: center;
+  gap: 20px;
+  justify-items: center;
+}
+
+button {
+  height: 50px;
+  width: 200px;
 }
 
 main {
@@ -27,4 +44,8 @@ main {
   width: 95%;
   background-color: beige;
   display: grid;
+}
+
+footer > .copyright {
+  font-size: smaller;
 }
