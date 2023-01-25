@@ -1,4 +1,5 @@
 const bookshelf = document.querySelector(".bookshelf");
+const container = document.querySelector(".container");
 
 console.log(bookshelf);
 
@@ -45,13 +46,15 @@ let createBookWindow = (bookInfo) => {
   let read = document.createElement("button");
   read.classList.add("button-read");
   read.classList.add("not-read");
-  read.innerText = `${bookInfo.read}`;
+  read.innerText = "Not Read";
   read.addEventListener("click", function () {
     if (read.classList.contains("not-read")) {
       read.classList.remove("not-read");
+      read.innerText = "Read";
       read.classList.add("read");
     } else {
       read.classList.remove("read");
+      read.innerText = "Not Read";
       read.classList.add("not-read");
     }
   });
@@ -83,3 +86,18 @@ function addBookToLibrary(newBook, bookshelf) {
 function removeBook(bookToRemove) {
   bookToRemove.remove();
 }
+
+const addBookButton = document.querySelector("#new-book");
+
+let formShowing = false;
+
+let showForm = () => {
+  if (!formShowing) {
+    let form = document.createElement("div");
+    form.classList.add("form");
+    container.appendChild(form);
+    formShowing = true;
+  }
+};
+
+addBookButton.addEventListener("click", showForm);
