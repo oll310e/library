@@ -31,8 +31,7 @@ footer {
   transition: all 0.2s;
 }
 
-#new-book:hover,
-.button-read:hover {
+#new-book:hover {
   background-color: beige;
   cursor: pointer;
 }
@@ -59,6 +58,7 @@ main {
   justify-self: center;
   align-self: center;
   transition: all 0.2s;
+  position: relative;
 }
 
 .book:hover {
@@ -77,4 +77,23 @@ footer > .copyright {
   border: 1px solid rgba(0, 0, 0, 0.62);
   background-color: rgb(239, 205, 160);
   transition: all 0.2s;
+}
+
+.read {
+  background-color: green;
+}
+
+.not-read {
+  background-color: red;
+}
+
+.deleteButton {
+  background-color: red;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  align-items: center;
 }

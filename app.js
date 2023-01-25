@@ -16,8 +16,10 @@ function Book(title, author, pages, read) {
   };
 }
 
+let dune = new Book("Dune", "Frank Herbert", "430", "Read");
 let harry = new Book("Harry Potter", "J.K. Rowling", "295", "Read");
 myLibrary.push(harry);
+myLibrary.push(dune);
 
 let createBookWindow = (bookInfo) => {
   console.log(bookInfo);
@@ -42,10 +44,32 @@ let createBookWindow = (bookInfo) => {
 
   let read = document.createElement("button");
   read.classList.add("button-read");
+  read.classList.add("not-read");
   read.innerText = `${bookInfo.read}`;
+  read.addEventListener("click", function () {
+    if (read.classList.contains("not-read")) {
+      read.classList.remove("not-read");
+      read.classList.add("read");
+    } else {
+      read.classList.remove("read");
+      read.classList.add("not-read");
+    }
+  });
+
   newsd.appendChild(read);
 
   newsd.appendChild(document.createElement("div"));
+
+  let deleteButton = document.createElement("button");
+  let i = document.createElement("i");
+  i.classList.add("fa-solid", "fa-x", "deleteButton");
+  i.addEventListener("click", (e) => {
+    removeBook(e.target.parentElement.parentElement);
+  });
+
+  deleteButton.appendChild(i);
+
+  newsd.appendChild(deleteButton);
 
   addBookToLibrary(newsd, bookshelf);
 };
@@ -54,4 +78,8 @@ myLibrary.forEach((bookInfo) => createBookWindow(bookInfo));
 
 function addBookToLibrary(newBook, bookshelf) {
   bookshelf.appendChild(newBook);
+}
+
+function removeBook(bookToRemove) {
+  bookToRemove.remove();
 }
