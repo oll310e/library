@@ -23,8 +23,6 @@ myLibrary.push(harry);
 myLibrary.push(dune);
 
 let createBookWindow = (bookInfo) => {
-  console.log(bookInfo);
-
   let newsd = document.createElement("div");
   newsd.classList.add("book");
   newsd.appendChild(document.createElement("div"));
@@ -77,8 +75,6 @@ let createBookWindow = (bookInfo) => {
   addBookToLibrary(newsd, bookshelf);
 };
 
-myLibrary.forEach((bookInfo) => createBookWindow(bookInfo));
-
 function addBookToLibrary(newBook, bookshelf) {
   bookshelf.appendChild(newBook);
 }
@@ -87,16 +83,122 @@ function removeBook(bookToRemove) {
   bookToRemove.remove();
 }
 
+function removeForm(form) {
+  form.remove();
+}
+
+function createBook(title, author, pages, read) {
+  let newBookToLibrary = new Book(title, author, pages, read);
+  return newBookToLibrary;
+}
+
 const addBookButton = document.querySelector("#new-book");
 
 let formShowing = false;
 
 let showForm = () => {
   if (!formShowing) {
-    let form = document.createElement("div");
+    let form = document.createElement("form");
+    form.id = "form";
     form.classList.add("form");
+
     container.appendChild(form);
     formShowing = true;
+
+    let icon = document.createElement("i");
+    icon.classList.add("fa-solid", "fa-x", "deleteButton");
+    icon.addEventListener("click", (e) => {
+      removeForm(e.target.parentElement);
+      formShowing = false;
+    });
+    form.appendChild(icon);
+
+    function createInput(name, type) {
+      let label = document.createElement("label");
+      label.setAttribute("for", `form-${name}`);
+      label.setAttribute("id", `form-${name}-label`);
+      label.innerText = `${name}`;
+
+      let input = document.createElement("input");
+      input.classList.add("input");
+      input.setAttribute("id", `form-${name}`);
+      input.type = type;
+      input.name = name;
+      input.required = true;
+
+      return [label, input];
+    }
+
+    for (let i = 0; i < 3; i++) {
+      let input;
+      let type = "text";
+      switch (i) {
+        case 0:
+          input = "title";
+          break;
+        case 1:
+          input = "author";
+          break;
+        case 2:
+          input = "pages";
+          type = "number";
+          break;
+      }
+      let newInput = createInput(input, type);
+      newInput.forEach((elem) => {
+        form.appendChild(elem);
+      });
+    }
+
+    let label = document.createElement("label");
+    label.setAttribute("for", `form-read`);
+    label.innerText = `read`;
+
+    let readButton = document.createElement("input");
+    readButton.classList.add("read-button");
+    readButton.setAttribute("id", `form-read`);
+    readButton.setAttribute("type", "checkbox");
+    readButton.setAttribute("name", "read");
+
+    let submitLabel = document.createElement("label");
+    submitLabel.setAttribute("for", `form-submit`);
+    submitLabel.innerText = ``;
+
+    let submitButton = document.createElement("input");
+    submitButton.classList.add("submit-button");
+    submitButton.setAttribute("id", `form-submit`);
+    submitButton.setAttribute("type", "submit");
+    submitButton.value = "register";
+
+    [label, readButton, submitLabel, submitButton].forEach((elem) => {
+      form.appendChild(elem);
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      console.log("submitted");
+
+      let title = document.querySelector("#form-title").value;
+      let author = document.querySelector("#form-author").value;
+      let pages = document.querySelector("#form-pages").value;
+      let read = document.querySelector("#form-read").value;
+
+      console.log(title, author, pages, read);
+
+      let newlyCreatedBook = createBook(title, author, pages, read);
+      console.log(newlyCreatedBook);
+
+      myLibrary.push(newlyCreatedBook);
+      console.log(myLibrary);
+
+      myLibrary.forEach((bookInfo) => {
+        createBookWindow(bookInfo);
+      });
+
+      removeForm(form);
+      formShowing = false;
+    });
   }
 };
 

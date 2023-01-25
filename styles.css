@@ -103,10 +103,24 @@ footer > .copyright {
 
 .form {
   z-index: 999;
-  height: 80vh;
-  width: 80vw;
+  height: auto;
+  width: clamp(350px, 80vw, 500px);
   top: 10vh;
-  left: 10vw;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
   position: absolute;
-  background-color: aqua;
+  background-color: rgb(79, 79, 116);
+  display: grid;
+  grid-template: 20px / 1fr 2fr;
+  grid-auto-rows: 20px;
+  gap: 20px;
+  padding: 55px 0 35px 0;
+  align-items: center;
+  justify-items: flex-start;
+}
+
+.form > label {
+  justify-self: flex-end;
 }
