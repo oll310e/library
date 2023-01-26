@@ -1,8 +1,6 @@
 const bookshelf = document.querySelector(".bookshelf");
 const container = document.querySelector(".container");
 
-console.log(bookshelf);
-
 let myLibrary = [];
 
 function Book(title, author, pages, read) {
@@ -10,6 +8,7 @@ function Book(title, author, pages, read) {
   this.author = author;
   this.pages = pages;
   this.read = read;
+  this.place = myLibrary.length;
   this.info = function () {
     return `${this.title} by ${this.author}, ${pages} pages, ${
       read ? "already read" : "not read yet"
@@ -17,14 +16,11 @@ function Book(title, author, pages, read) {
   };
 }
 
-let dune = new Book("Dune", "Frank Herbert", "430", "Read");
-let harry = new Book("Harry Potter", "J.K. Rowling", "295", "Read");
-myLibrary.push(harry);
-myLibrary.push(dune);
-
 let createBookWindow = (bookInfo) => {
+  console.log(bookInfo, "bookinfo");
   let newsd = document.createElement("div");
-  newsd.classList.add("book");
+  newsd.classList.add("book", bookInfo.place);
+  //newsd.setAttribute('data', `${}`)
   newsd.appendChild(document.createElement("div"));
   let title = document.createElement("h2");
   title.classList.add("book.title");
@@ -42,9 +38,14 @@ let createBookWindow = (bookInfo) => {
   newsd.appendChild(pages);
 
   let read = document.createElement("button");
-  read.classList.add("button-read");
-  read.classList.add("not-read");
-  read.innerText = "Not Read";
+  read.innerText = "Read";
+  read.classList.add("read", "button-read");
+  if (bookInfo.read == "not-read") {
+    read.innerText = "Not Read";
+    read.classList.remove("read");
+    read.classList.add("not-read");
+  }
+
   read.addEventListener("click", function () {
     if (read.classList.contains("not-read")) {
       read.classList.remove("not-read");
@@ -80,6 +81,8 @@ function addBookToLibrary(newBook, bookshelf) {
 }
 
 function removeBook(bookToRemove) {
+  index = bookToRemove.classList[1];
+  myLibrary.splice(index, 1);
   bookToRemove.remove();
 }
 
@@ -159,6 +162,7 @@ let showForm = () => {
     readButton.setAttribute("id", `form-read`);
     readButton.setAttribute("type", "checkbox");
     readButton.setAttribute("name", "read");
+    readButton.setAttribute("value", "read");
 
     let submitLabel = document.createElement("label");
     submitLabel.setAttribute("for", `form-submit`);
@@ -182,9 +186,11 @@ let showForm = () => {
       let title = document.querySelector("#form-title").value;
       let author = document.querySelector("#form-author").value;
       let pages = document.querySelector("#form-pages").value;
-      let read = document.querySelector("#form-read").value;
-
-      console.log(title, author, pages, read);
+      let readButton = document.querySelector("#form-read");
+      let read = "not-read";
+      if (readButton.checked) {
+        read = "read";
+      }
 
       let newlyCreatedBook = createBook(title, author, pages, read);
       console.log(newlyCreatedBook);
@@ -192,9 +198,7 @@ let showForm = () => {
       myLibrary.push(newlyCreatedBook);
       console.log(myLibrary);
 
-      myLibrary.forEach((bookInfo) => {
-        createBookWindow(bookInfo);
-      });
+      createBookWindow(newlyCreatedBook);
 
       removeForm(form);
       formShowing = false;
