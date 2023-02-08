@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Library</title>
-    <script src="app.js" defer></script>
+    <script src="script.js" defer></script>
     <script
       src="https://kit.fontawesome.com/a496b1bf3a.js"
       crossorigin="anonymous"
@@ -15,14 +15,25 @@
   <body>
     <div class="container">
       <header>
-        <h1 class="title">Forbidden Library</h1>
-        <button id="new-book" type="button">Add Book</button>
+        <i class="fa-solid fa-hippo"></i>
+        <h1>Library</h1>
       </header>
-      <main class="bookshelf"></main>
-      <footer>
-        <p>"When the world is but a dim moon, Wait upon the dawning Gods."</p>
-        <p class="copyright">@copyright, All Rights Reserved</p>
-      </footer>
+      <main>
+        <form>
+          <label for="title">Title</label>
+          <input id="title" type="text" required />
+          <label for="author">Author</label>
+          <input id="author" type="text" required />
+          <label for="pages">Pages</label>
+          <input id="pages" type="number" step="1" min="0" required />
+          <label for="read"
+            >Read? <input type="checkbox" id="read" value="read"
+          /></label>
+
+          <input type="submit" value="Add Book" id="form-submit" />
+        </form>
+        <div class="library"></div>
+      </main>
     </div>
   </body>
 </html>
